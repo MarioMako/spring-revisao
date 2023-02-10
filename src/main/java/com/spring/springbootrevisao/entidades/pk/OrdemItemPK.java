@@ -2,11 +2,20 @@ package com.spring.springbootrevisao.entidades.pk;
 
 import com.spring.springbootrevisao.entidades.Ordem;
 import com.spring.springbootrevisao.entidades.Produto;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
+import java.io.Serializable;
 import java.util.Objects;
-
-public class OrdemItemPK {
+@Embeddable
+public class OrdemItemPK implements Serializable {
+    public static final long serialVersionUID = 1L;
+    @ManyToOne
+    @JoinColumn(name="ORDEM_ID")
     private Ordem ordem;
+    @ManyToOne
+    @JoinColumn(name="PRODUTO_ID")
     private Produto produto;
 
     public Ordem getOrdem() {return ordem;}
