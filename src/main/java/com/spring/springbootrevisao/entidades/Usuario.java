@@ -12,9 +12,13 @@ public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "NOME")
     private String nome;
+    @Column(name="EMAIL")
     private String email;
+    @Column(name = "PHONE")
     private String phone;
+    @Column(name="SENHA")
     private String senha;
 
     public Usuario() {
