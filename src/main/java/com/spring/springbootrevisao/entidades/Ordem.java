@@ -2,6 +2,7 @@ package com.spring.springbootrevisao.entidades;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.spring.springbootrevisao.entidades.enums.OrdemStatus;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -18,6 +19,8 @@ public class Ordem implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd/MM/yyyy HH:mm:ss")
     @Column(name = "MOMENTO")
     private Date momento;
+    @Column(name="ORDEM_STATUS")
+    private Integer ordemStatus;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CLIENTE_ID",nullable = false)
@@ -25,10 +28,11 @@ public class Ordem implements Serializable {
 
     public Ordem() {
     }
-    public Ordem(Long id, Date momento, Usuario cliente) {
+    public Ordem(Long id, Date momento, Usuario cliente, OrdemStatus ordemStatus) {
         this.id = id;
         this.momento = momento;
         this.cliente = cliente;
+        setOrdemStatus(ordemStatus);
     }
 
     public Long getId() {return id;}
@@ -37,6 +41,8 @@ public class Ordem implements Serializable {
     public void setMomento(Date momento) {this.momento = momento;}
     public Usuario getCliente() {return cliente;}
     public void setCliente(Usuario cliente) {this.cliente = cliente;}
+    public OrdemStatus getOrdemStatus() {return OrdemStatus.valueOf(ordemStatus);}
+    public void setOrdemStatus(OrdemStatus ordemStatus) {if(ordemStatus != null){this.ordemStatus = ordemStatus.getStatus();}}
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
