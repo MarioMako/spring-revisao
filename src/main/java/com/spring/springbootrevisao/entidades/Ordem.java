@@ -26,9 +26,9 @@ public class Ordem implements Serializable {
     @JoinColumn(name = "CLIENTE_ID",nullable = false)
     private Usuario cliente;
     @JsonIgnore
-    @OneToMany(mappedBy = "ID.ORDEM")
+    @OneToMany(mappedBy = "id.ordem")
     private Set<OrdemItem> items = new HashSet<>();
-    @OneToOne(mappedBy = "ORDEM",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "ordem",cascade = CascadeType.ALL)
     private Pagamento pagamento;
     public Ordem() {
     }
