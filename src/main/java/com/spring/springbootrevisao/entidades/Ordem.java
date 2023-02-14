@@ -16,7 +16,7 @@ public class Ordem implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd/MM/yyyy HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd/MM/yyyy HH:mm:ss", timezone = "GMT")
     @Column(name = "MOMENTO")
     private Date momento;
     @Column(name="ORDEM_STATUS")
@@ -25,7 +25,11 @@ public class Ordem implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CLIENTE_ID",nullable = false)
     private Usuario cliente;
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "ID.ORDEM")
+    private Set<OrdemItem> items = new HashSet<>();
+    @OneToOne(mappedBy = "ORDEM",cascade = CascadeType.ALL)
+    private Pagamento pagamento;
     public Ordem() {
     }
     public Ordem(Long id, Date momento, Usuario cliente, OrdemStatus ordemStatus) {
@@ -34,7 +38,6 @@ public class Ordem implements Serializable {
         this.cliente = cliente;
         setOrdemStatus(ordemStatus);
     }
-
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
     public Date getMomento() {return momento;}
@@ -43,6 +46,10 @@ public class Ordem implements Serializable {
     public void setCliente(Usuario cliente) {this.cliente = cliente;}
     public OrdemStatus getOrdemStatus() {return OrdemStatus.valueOf(ordemStatus);}
     public void setOrdemStatus(OrdemStatus ordemStatus) {if(ordemStatus != null){this.ordemStatus = ordemStatus.getStatus();}}
+    public Pagamento getPagamento() {return pagamento;}
+    public void setPagamento(Pagamento pagamento) {this.pagamento = pagamento;}
+    public Set<OrdemItem> getItems(){return items;}
+    public Double getTotal(){double sum = 0.0;for (OrdemItem x : items){sum += x.getSubTotal();}return sum;}
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

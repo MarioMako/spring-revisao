@@ -1,5 +1,6 @@
 package com.spring.springbootrevisao.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -26,6 +27,9 @@ public class Produto implements Serializable {
             joinColumns = @JoinColumn(name = "PRODUTO_ID"),
             inverseJoinColumns = @JoinColumn(name = "CATEGORIA_ID"))
     private Set<Categoria> categorias = new HashSet<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "ID.PRODUTO")
+    private Set<OrdemItem> items = new HashSet<>();
     public Produto() {
     }
     public Produto(Long id, String nome, String descricao, Double preco, String imgUrl) {
@@ -46,4 +50,17 @@ public class Produto implements Serializable {
     public String getImgUrl() {return imgUrl;}
     public void setImgUrl(String imgUrl) {this.imgUrl = imgUrl;}
     public Set<Categoria> getCategorias() {return categorias;}
+    public Set<Ordem> getOrdens(){Set<Ordem> set = new HashSet<>();for(OrdemItem x : items){set.add(x.getOrdem());}return set;}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Produto produto = (Produto) o;
+        return getId().equals(produto.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }
