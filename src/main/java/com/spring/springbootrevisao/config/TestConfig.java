@@ -32,7 +32,7 @@ public class TestConfig implements CommandLineRunner {
         Usuario u2 = new Usuario(null, "Wumpy Lumpy", "robert@gmail.com", "977777777", "123456");
 
         Ordem o1 = new Ordem(null,sdf.parse("22/06/2022 12:06:27"),u1, OrdemStatus.PROCESSAMENTO);
-        Ordem o2 = new Ordem(null,sdf.parse("22/06/2022 12:06:27"),u1,OrdemStatus.ENVIADO);
+        Ordem o2 = new Ordem(null,sdf.parse("22/06/2022 12:06:27"),u1,OrdemStatus.ENTREGUE);
         Ordem o3 = new Ordem(null,sdf.parse("22/07/2022 09:12:27"),u2,OrdemStatus.PREPARANDO);
 
         Categoria cat1 = new Categoria(1L, "Electronicos");
@@ -49,6 +49,9 @@ public class TestConfig implements CommandLineRunner {
         OrdemItem oi2 = new OrdemItem(o1, p3, 1, p3.getPreco());
         OrdemItem oi3 = new OrdemItem(o2, p3, 2, p3.getPreco());
         OrdemItem oi4 = new OrdemItem(o3, p5, 2, p5.getPreco());
+
+        Pagamento pagamento = new Pagamento(null, sdf.parse("22/06/2022 12:30:00"),o2);
+        o1.setPagamento(pagamento);
 
         p1.getCategorias().add(cat2);
         p2.getCategorias().add(cat1);
