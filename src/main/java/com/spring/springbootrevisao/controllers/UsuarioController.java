@@ -33,8 +33,8 @@ public class UsuarioController {
         return ResponseEntity.created(uri).body(obj);
     }
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Usuario> delete(@RequestBody Usuario obj){
-        service.delete(obj);
+    public ResponseEntity<Usuario> deleteById(@PathVariable Long id){
+        service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
     @PutMapping(value = "/{id}")
