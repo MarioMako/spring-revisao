@@ -11,6 +11,7 @@ import java.net.URI;
 import java.util.*;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
